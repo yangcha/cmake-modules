@@ -34,7 +34,7 @@
 set(SET_PROGRAM_ENV_CMAKE_DIR ${CMAKE_CURRENT_LIST_DIR})
 function(set_program_env)
 	set(options "")
-  	set(oneValueArgs WORKING_DIRECTORY)
+	set(oneValueArgs WORKING_DIRECTORY)
 	set(multiValueArgs RUNTIME_DIRS ENVIRONMENT)
 	cmake_parse_arguments(PROGRAM_ENV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 	if(WIN32)
@@ -45,7 +45,7 @@ function(set_program_env)
 				"${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.vcxproj.user"
 				"${PROGRAM_ENV_RUNTIME_DIRS}"
 				WORKING_DIRECTORY ${SET_PROGRAM_ENV_CMAKE_DIR})
-		 ENDIF()
+		ENDIF()
 	endif()
 endfunction()
 
