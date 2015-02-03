@@ -12,14 +12,14 @@ Param (
 
 #region Set of functions
 function XmlWritePropertyGroup($conf, $arch) {
-$xmlWriter.WriteStartElement('PropertyGroup')
-$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$arch'")
-$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
-$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
-if($workdir) {
-	$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
-}
-$xmlWriter.WriteEndElement()
+	$xmlWriter.WriteStartElement('PropertyGroup')
+	$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$arch'")
+	$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
+	$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
+	if($workdir) {
+		$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
+	}
+	$xmlWriter.WriteEndElement()
 }
 #endregion
 
@@ -28,9 +28,9 @@ $encoding = [System.Text.Encoding]::UTF8
 $XmlWriter = New-Object System.XMl.XmlTextWriter($userpath,$encoding)
 
 # choose a pretty formatting:
-	$xmlWriter.Formatting = 'Indented'
-	$xmlWriter.Indentation = 2
-	$XmlWriter.IndentChar = ' '
+$xmlWriter.Formatting = 'Indented'
+$xmlWriter.Indentation = 2
+$XmlWriter.IndentChar = ' '
 
 # write the header
 $xmlWriter.WriteStartDocument()
