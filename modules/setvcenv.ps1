@@ -1,21 +1,31 @@
 # powershell script for create running env for visual c++
 # Author: Changjiang Yang
 #
-#region Set of functions
-function xmlwriteelements($mode) {
-
-}
-
-#endregion
 
 Param (
 	[string]$userpath,
+	[string]$comparch,
+	[string]$conftypes,
 	[string]$workdir,
 	[string]$envars
 )
 
+#region Set of functions
+function XmlWritePropertyGroup($conf, $arch) {
+	$conf
+$xmlWriter.WriteStartElement('PropertyGroup')
+$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$arch'")
+$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
+$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
+if($workdir) {
+	$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
+}
+$xmlWriter.WriteEndElement()
+}
+#endregion
 
-	$encoding = [System.Text.Encoding]::UTF8
+##### Main() #######
+$encoding = [System.Text.Encoding]::UTF8
 $XmlWriter = New-Object System.XMl.XmlTextWriter($userpath,$encoding)
 
 # choose a pretty formatting:
@@ -32,28 +42,13 @@ $XmlWriter.WriteAttributeString('ToolsVersion', '12.0')
 $XmlWriter.WriteAttributeString('xmlns', 'http://schemas.microsoft.com/developer/msbuild/2003')
 
 $PathStr = 'PATH=' + ($args -join ';') + ';%PATH%'
-
 if($envars) {
 	$PathStr = $PathStr + "`n" + ($envars -join ';')
 }
 
-$xmlWriter.WriteStartElement('PropertyGroup')
-$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='Debug|x64'")
-$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
-$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
-if($workdir) {
-	$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
+foreach ($conf in $conftypes -split ';' ) {
+	XmlWritePropertyGroup $conf $comparch
 }
-$xmlWriter.WriteEndElement()
-
-$xmlWriter.WriteStartElement('PropertyGroup')
-$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='Release|x64'")
-$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
-$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
-if($workdir) {
-	$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
-}
-$xmlWriter.WriteEndElement()
 
 # close the "Project" node:
 $xmlWriter.WriteEndElement()
