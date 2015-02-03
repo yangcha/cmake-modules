@@ -12,7 +12,6 @@ Param (
 
 #region Set of functions
 function XmlWritePropertyGroup($conf, $arch) {
-	$conf
 $xmlWriter.WriteStartElement('PropertyGroup')
 $XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$arch'")
 $xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
