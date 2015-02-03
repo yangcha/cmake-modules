@@ -33,6 +33,7 @@
 
 set(SET_PROGRAM_ENV_CMAKE_DIR ${CMAKE_CURRENT_LIST_DIR})
 function(set_program_env)
+	include(CMakeParseArguments)
 	set(options "")
 	set(oneValueArgs WORKING_DIRECTORY)
 	set(multiValueArgs RUNTIME_DIRS ENVIRONMENT)
@@ -41,8 +42,10 @@ function(set_program_env)
 		FIND_FILE(POWERSHELL NAMES powershell.exe)
 		IF(POWERSHELL)
 			EXECUTE_PROCESS(COMMAND "powershell" "-ExecutionPolicy" "ByPass" "-noprofile" 
-				"-File" "./setvcenv.ps1" 
-				"${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.vcxproj.user"
+				"-File" "./setvcenv.ps1"
+				"-userpath" "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.vcxproj.user"
+				"-workdir" "${PROGRAM_ENV_WORKING_DIRECTORY}"
+				"-envars" "${PROGRAM_ENV_ENVIRONMENT}"
 				"${PROGRAM_ENV_RUNTIME_DIRS}"
 				WORKING_DIRECTORY ${SET_PROGRAM_ENV_CMAKE_DIR})
 		ENDIF()
