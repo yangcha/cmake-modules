@@ -24,7 +24,24 @@
 #	[ENVIRONMENT <VAR=value>...]
 #	)
 #
-# Set runtime library paths, environmental variables
+# Set runtime library paths, environmental variables and
+# working directory. See example:
+#
+# ::
+# 
+# include(SetProgramEnv)
+#  
+#  set_program_env(
+#  	WORKING_DIRECTORY
+#  	"${CMAKE_BINARY_DIR}/bin"
+#  	RUNTIME_DIRS
+#  	"${CMAKE_BINARY_DIR}/bin"
+#  	"C:\\Users\\Documents\\Visual Studio 2010"
+#  	ENVIRONMENT
+#  	"BINROOT=${CMAKE_BINARY_DIR}"
+#  	"SRCROOT=${CMAKE_SOURCE_DIR}"
+#  	)
+
 
 # Copyright (c) 2015, Changjiang Yang yangcj@gmail.com
 # All rights reserved.
