@@ -11,9 +11,9 @@ Param (
 )
 
 #region Set of functions
-function XmlWritePropertyGroup($conf, $arch) {
+function XmlWritePropertyGroup($conf) {
 	$xmlWriter.WriteStartElement('PropertyGroup')
-	$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$arch'")
+	$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$comparch'")
 	$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
 	$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
 	if($workdir) {
@@ -46,7 +46,7 @@ if($envars) {
 }
 
 foreach ($conf in $conftypes -split ';' ) {
-	XmlWritePropertyGroup $conf $comparch
+	XmlWritePropertyGroup $conf
 }
 
 # close the "Project" node:
