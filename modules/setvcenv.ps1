@@ -10,23 +10,8 @@ Param (
 	[string]$envars
 )
 
-#region Set of functions
-function XmlWritePropertyGroup($conf) {
-	$xmlWriter.WriteStartElement('PropertyGroup')
-	$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$conf|$comparch'")
-	$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
-	$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
-	if($workdir) {
-		$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
-	}
-	$xmlWriter.WriteEndElement()
-}
-#endregion
-
-##### Main() #######
 $encoding = [System.Text.Encoding]::UTF8
 $XmlWriter = New-Object System.XMl.XmlTextWriter($userpath,$encoding)
-
 # choose a pretty formatting:
 $xmlWriter.Formatting = 'Indented'
 $xmlWriter.Indentation = 2
@@ -45,9 +30,16 @@ if($envars) {
 	$PathStr = $PathStr + "`n" + ($envars -join ';')
 }
 
-foreach ($conf in $conftypes -split ';' ) {
-	XmlWritePropertyGroup $conf
-}
+$conftypes -split ';' | foreach {
+	$xmlWriter.WriteStartElement('PropertyGroup')
+	$XmlWriter.WriteAttributeString('Condition', "'`$(Configuration)|`$(Platform)'=='$_|$comparch'")
+	$xmlWriter.WriteElementString('LocalDebuggerEnvironment', $PathStr)
+	$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
+	if($workdir) {
+		$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
+		}
+	$xmlWriter.WriteEndElement()
+	}
 
 # close the "Project" node:
 $xmlWriter.WriteEndElement()
