@@ -14,7 +14,7 @@ The WORKING_DIRECTORY specifies the program working directory. RUNTIME_DIRS spec
 ```
 include(SetProgramEnv)
 
-set_program_env(
+set_program_env( Example1
 	WORKING_DIRECTORY
 	"${CMAKE_BINARY_DIR}/bin"
 	RUNTIME_DIRS
