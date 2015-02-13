@@ -55,7 +55,7 @@ function(set_program_env)
 	set(oneValueArgs WORKING_DIRECTORY)
 	set(multiValueArgs RUNTIME_DIRS ENVIRONMENT)
 	cmake_parse_arguments(PROGRAM_ENV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-	message (STATUS  "${PROJECT_BINARY_DIR}/${PROGRAM_ENV_UNPARSED_ARGUMENTS}.vcxproj.user")
+	
 	if(MSVC)
 		if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
 			set(comparch "x64")
