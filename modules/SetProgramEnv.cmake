@@ -55,7 +55,7 @@ function(set_program_env)
 	set(oneValueArgs WORKING_DIRECTORY)
 	set(multiValueArgs RUNTIME_DIRS ENVIRONMENT)
 	cmake_parse_arguments(PROGRAM_ENV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-	
+		
 	if(MSVC)
 		if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
 			set(comparch "x64")
@@ -69,7 +69,7 @@ function(set_program_env)
 		IF(POWERSHELL)
 			EXECUTE_PROCESS(COMMAND "powershell" "-ExecutionPolicy" "ByPass" "-noprofile" 
 				"-File" "./setvcenv.ps1"
-				"-userpath" "${PROJECT_BINARY_DIR}/${PROGRAM_ENV_UNPARSED_ARGUMENTS}.vcxproj.user"
+				"-userpath" "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM_ENV_UNPARSED_ARGUMENTS}.vcxproj.user"
 				"-comparch" ${comparch}
 				"-conftypes" "${CMAKE_CONFIGURATION_TYPES}"
 				"-workdir" "${PROGRAM_ENV_WORKING_DIRECTORY}"
