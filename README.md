@@ -1,5 +1,5 @@
 # cmake-modules
-A collection of CMake utility functions for setting runtime library paths, environmental variables, working directory for Visual C++.
+A collection of CMake utility functions for setting runtime library paths, environmental variables, working directory for Visual C++. And function for adding unit tests using google test with cmake.
 
 ```
    SET_PROGRAM_ENV(<name>
@@ -24,4 +24,17 @@ set_program_env( Example1
 	"BINROOT=${CMAKE_BINARY_DIR}"
 	"SRCROOT=${CMAKE_SOURCE_DIR}"
 	)
+```
+
+To add an unit test with Google test, use function:
+```
+  ADD_GTEST(<name>
+            source1 [source2 ...])
+```
+
+See the following example to add unit test using cmake with google test framework:
+
+```
+include(gtest)
+add_gtest(unitTest test_example.cpp)
 ```

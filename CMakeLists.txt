@@ -5,6 +5,8 @@
 
 cmake_minimum_required (VERSION 2.6)
 
+option(build_tests "Build all of tests." OFF)
+
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules")
 
 project (Example)
@@ -34,3 +36,8 @@ set_program_env(Example2
 	"BINROOT=${CMAKE_BINARY_DIR}"
 	"SRCROOT=${CMAKE_SOURCE_DIR}"
 	)
+
+if (build_tests)
+	include(gtest)
+	add_gtest(unitTest test_example.cpp)
+endif()
