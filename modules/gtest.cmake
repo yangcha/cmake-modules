@@ -21,6 +21,13 @@
 
 set(GTEST_ROOT "${CMAKE_CURRENT_LIST_DIR}" CACHE PATH "Root path to the Google Test.")
 
+# where will executable tests be written ?
+IF (EXECUTABLE_OUTPUT_PATH)
+    SET (CXX_TEST_PATH ${EXECUTABLE_OUTPUT_PATH})
+ELSE ()
+    SET (CXX_TEST_PATH .)
+ENDIF()
+
 #make test or ctest
 enable_testing()
 
@@ -32,7 +39,7 @@ function(add_gtest target)
 		${GTEST_ROOT}/gtest_main.cc
 		${GTEST_ROOT}/gtest/gtest-all.cc
 		)
-	add_test(${target} ${target})
+	add_test(${target} ${CXX_TEST_PATH}/${target})
 endfunction()
 
 
