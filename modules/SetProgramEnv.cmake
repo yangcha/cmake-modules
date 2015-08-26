@@ -22,10 +22,11 @@
 #	[WORKING_DIRECTORY <dir>]
 #	[RUNTIME_DIRS <dirs>...]
 #	[ENVIRONMENT <VAR=value>...]
+#	[COMMAND_ARGS <value>]
 #	)
 #
 # Set runtime library paths, environmental variables and
-# working directory. See example:
+# working directory and command arguments. See example:
 #
 # ::
 # 
@@ -40,6 +41,8 @@
 #  	ENVIRONMENT
 #  	"BINROOT=${CMAKE_BINARY_DIR}"
 #  	"SRCROOT=${CMAKE_SOURCE_DIR}"
+#	COMMAND_ARGS
+#	"input output"
 #  	)
 
 
@@ -52,7 +55,7 @@ set(SET_PROGRAM_ENV_CMAKE_DIR ${CMAKE_CURRENT_LIST_DIR})
 function(set_program_env)
 	include(CMakeParseArguments)
 	set(options "")
-	set(oneValueArgs WORKING_DIRECTORY)
+	set(oneValueArgs WORKING_DIRECTORY COMMAND_ARGS)
 	set(multiValueArgs RUNTIME_DIRS ENVIRONMENT)
 	cmake_parse_arguments(PROGRAM_ENV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 		
@@ -74,6 +77,7 @@ function(set_program_env)
 				"-conftypes" "${CMAKE_CONFIGURATION_TYPES}"
 				"-workdir" "${PROGRAM_ENV_WORKING_DIRECTORY}"
 				"-envars" "${PROGRAM_ENV_ENVIRONMENT}"
+				"-cmdargs" "${PROGRAM_ENV_COMMAND_ARGS}"
 				"${PROGRAM_ENV_RUNTIME_DIRS}"
 				WORKING_DIRECTORY "${SET_PROGRAM_ENV_CMAKE_DIR}")
 		ENDIF()

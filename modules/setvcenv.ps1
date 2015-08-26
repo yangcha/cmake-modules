@@ -7,6 +7,7 @@ Param (
 	[string]$comparch,
 	[string]$conftypes,
 	[string]$workdir,
+	[string]$cmdargs,
 	[string]$envars
 )
 
@@ -37,6 +38,9 @@ $conftypes -split ';' | foreach {
 	$xmlWriter.WriteElementString('DebuggerFlavor', 'WindowsLocalDebugger')
 	if($workdir) {
 		$xmlWriter.WriteElementString('LocalDebuggerWorkingDirectory', $workdir)
+		}
+	if($cmdargs) {
+		$xmlWriter.WriteElementString('LocalDebuggerCommandArguments', $cmdargs)
 		}
 	$xmlWriter.WriteEndElement()
 	}
