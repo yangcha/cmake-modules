@@ -6,10 +6,11 @@ A collection of CMake utility functions for setting runtime library paths, envir
 	[WORKING_DIRECTORY <dir>]
 	[RUNTIME_DIRS <dirs>...]
 	[ENVIRONMENT <VAR=value>...]
+	[COMMAND_ARGS <value>]
 	)
 ```
 
-The WORKING_DIRECTORY specifies the program working directory. RUNTIME_DIRS specifies the dynamic library directories. ENVIRONMENT sets the environmental variables. See the following example:
+The WORKING_DIRECTORY specifies the program working directory. RUNTIME_DIRS specifies the dynamic library directories. ENVIRONMENT sets the environmental variables and command arguments. See the following example:
 
 ```
 include(SetProgramEnv)
@@ -23,6 +24,8 @@ set_program_env( Example1
 	ENVIRONMENT
 	"BINROOT=${CMAKE_BINARY_DIR}"
 	"SRCROOT=${CMAKE_SOURCE_DIR}"
+	COMMAND_ARGS
+	"input output"
 	)
 ```
 
