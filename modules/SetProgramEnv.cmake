@@ -59,8 +59,20 @@ function(set_program_env)
 		
 	if(MSVC)
 		#Source: https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-toolset-toolsversion
-		if(MSVC_VERSION GREATER_EQUAL 1910)
-			# VS 2017 or greater
+		if(MSVC_VERSION GREATER_EQUAL 1914)
+			# VS 2017.7 or greater
+			set(MSBUILD_TOOLS_VERSION 15.7)
+		elseif(MSVC_VERSION EQUAL 1913)
+			# VS 2017.6
+			set(MSBUILD_TOOLS_VERSION 15.6)
+		elseif(MSVC_VERSION EQUAL 1912)
+			# VS 2017.5
+			set(MSBUILD_TOOLS_VERSION 15.5)
+		elseif(MSVC_VERSION EQUAL 1911)
+			# VS 2017.3
+			set(MSBUILD_TOOLS_VERSION 15.3)
+		elseif(MSVC_VERSION EQUAL 1910)
+			# VS 2017.0
 			set(MSBUILD_TOOLS_VERSION 15.0)
 		elseif(MSVC_VERSION EQUAL 1900)
 			# VS 2015
