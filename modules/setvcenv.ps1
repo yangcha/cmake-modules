@@ -1,6 +1,8 @@
 # powershell script for create running env for visual c++
-# Author: Changjiang Yang
-#
+# Author: Changjiang Yang, 2015
+## Distributed under the BSD License: 
+## http://choosealicense.com/licenses/bsd-2-clause/
+
 
 Param (
 	[string]$userpath,
@@ -8,7 +10,8 @@ Param (
 	[string]$conftypes,
 	[string]$workdir,
 	[string]$cmdargs,
-	[string]$envars
+	[string]$envars,
+	[string]$toolsversion
 )
 
 $encoding = [System.Text.Encoding]::UTF8
@@ -23,7 +26,7 @@ $xmlWriter.WriteStartDocument()
 
 # create root element "Project" and add some attributes to it
 $xmlWriter.WriteStartElement('Project')
-$XmlWriter.WriteAttributeString('ToolsVersion', '12.0')
+$XmlWriter.WriteAttributeString('ToolsVersion', $toolsversion)
 $XmlWriter.WriteAttributeString('xmlns', 'http://schemas.microsoft.com/developer/msbuild/2003')
 
 $PathStr = 'PATH=' + ($args -join ';') + ';%PATH%'

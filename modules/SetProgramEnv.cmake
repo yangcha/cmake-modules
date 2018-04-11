@@ -45,11 +45,9 @@
 #	"input output"
 #  	)
 
-
-# Copyright (c) 2015, Changjiang Yang yangcj@gmail.com
-# All rights reserved.
-# Distributed under the BSD License: 
-# http://choosealicense.com/licenses/bsd-2-clause/
+# Author: Changjiang Yang, yangcj@gmail.com 2015
+## Distributed under the BSD License: 
+## http://choosealicense.com/licenses/bsd-2-clause/
 
 set(SET_PROGRAM_ENV_CMAKE_DIR ${CMAKE_CURRENT_LIST_DIR})
 function(set_program_env)
@@ -60,6 +58,32 @@ function(set_program_env)
 	cmake_parse_arguments(PROGRAM_ENV "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 		
 	if(MSVC)
+		#Source: https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-toolset-toolsversion
+		if(MSVC_VERSION GREATER_EQUAL 1910)
+			# VS 2017 or greater
+			set(MSBUILD_TOOLS_VERSION 15.0)
+		elseif(MSVC_VERSION EQUAL 1900)
+			# VS 2015
+			set(MSBUILD_TOOLS_VERSION 14.0)
+		elseif(MSVC_VERSION EQUAL 1800)
+			# VS 2013
+			set(MSBUILD_TOOLS_VERSION 12.0)
+		elseif(MSVC_VERSION EQUAL 1700)
+			# VS 2012
+			set(MSBUILD_TOOLS_VERSION 4.0)
+		elseif(MSVC_VERSION EQUAL 1600)
+			# VS 2010
+			set(MSBUILD_TOOLS_VERSION 4.0)
+		elseif(MSVC_VERSION EQUAL 1500)
+			# VS 2008
+			set(MSBUILD_TOOLS_VERSION 3.5)
+		elseif(MSVC_VERSION EQUAL 1400)
+			# VS 2005
+			set(MSBUILD_TOOLS_VERSION 2.0)
+		else()
+			# We don't support MSBUILD_TOOLS_VERSION for earlier compiler.
+		endif()
+
 		if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
 			set(comparch "x64")
 		elseif("${CMAKE_SIZEOF_VOID_P}" STREQUAL "8")
@@ -78,6 +102,7 @@ function(set_program_env)
 				"-workdir" "${PROGRAM_ENV_WORKING_DIRECTORY}"
 				"-envars" "${PROGRAM_ENV_ENVIRONMENT}"
 				"-cmdargs" "${PROGRAM_ENV_COMMAND_ARGS}"
+				"-toolsversion" ${MSBUILD_TOOLS_VERSION}
 				"${PROGRAM_ENV_RUNTIME_DIRS}"
 				WORKING_DIRECTORY "${SET_PROGRAM_ENV_CMAKE_DIR}")
 		ENDIF()
